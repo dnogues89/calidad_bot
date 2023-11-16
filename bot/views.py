@@ -33,8 +33,7 @@ class ChatFlow():
             2:self.validate_numero(self.mensaje,5),
             3:self.validate_numero(self.mensaje,5),
             4:self.validate_numero(self.mensaje,5),
-            5:self.validate_numero(self.mensaje,5),
-            6:True,
+            5:True
         }
         
         if hash_map[self.flow.flow_id]:
@@ -47,15 +46,15 @@ class ChatFlow():
 
               
     def update_cliente(self):
-        if self.flow.flow_id == 1:
+        if self.flow.flow_id == 0:
             self.cliente.pregunta_1 = self.mensaje
-        if self.flow.flow_id == 2:
+        if self.flow.flow_id == 1:
             self.cliente.pregunta_2 = self.mensaje
-        if self.flow.flow_id == 3:
+        if self.flow.flow_id == 2:
             self.cliente.pregunta_3 = self.mensaje
-        if self.flow.flow_id == 4:
+        if self.flow.flow_id == 3:
             self.cliente.pregunta_4 = self.mensaje
-        if self.flow.flow_id == 5:
+        if self.flow.flow_id == 4:
             self.cliente.pregunta_5 = self.mensaje
 
 
