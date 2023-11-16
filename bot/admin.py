@@ -6,7 +6,7 @@ class MensajesRecibidosAdmin(admin.ModelAdmin):
     list_display=('telefono_cliente','mensaje','creado','id_wa')
 
 class ClienteAdmin(admin.ModelAdmin):
-    list_display=('nombre','telefono','email','flow','contacto')
+    list_display=('nombre','telefono','flow','contacto')
 
 class FlowAdmin(admin.ModelAdmin):
     list_display=('flow_id','respuesta_ok','next_flow','respuesta_nook')
