@@ -16,6 +16,7 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=50, blank=True,null=True)
     preventa = models.CharField(max_length=30, blank=True,null=True)
     patente = models.CharField(max_length=30, blank=True,null=True)
+    entrega = models.DateField(blank=True,null=True)
     modelo = models.CharField(max_length=50, blank=True,null=True)
     pregunta_1 = models.IntegerField(blank=True,null=True)
     pregunta_2 = models.IntegerField(blank=True,null=True)

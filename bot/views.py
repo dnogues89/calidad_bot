@@ -93,13 +93,14 @@ def procesar_mensaje(body):
 
 
 
+
 # Create your views here.
 @csrf_exempt
 def webhook(request):
     # SI HAY DATOS RECIBIDOS VIA GET
     if request.method == "GET":
         # SI EL TOKEN ES IGUAL AL QUE RECIBIMOS
-        if request.GET.get('hub.verify_token') == "FransiBOT":
+        if request.GET.get('hub.verify_token') == "CalidadESPASA":
             # ESCRIBIMOS EN EL NAVEGADOR EL VALOR DEL RETO RECIBIDO DESDE FACEBOOK
             return HttpResponse(request.GET.get('hub.challenge'))
         else:
@@ -185,3 +186,56 @@ def clientes_abandonados(request):
         #ACA SE MANDA AL CRM!
         
         cliente.save()
+        
+        
+def realizar_encuesta(request): 
+    cliente = Cliente.objects.get(pk=1)
+    data = json.dumps(
+            {
+   "messaging_product": "whatsapp",
+   "to": cliente.telefono,
+   "type": "template",
+   "template": {
+       "name": "encuesta_calidad_baires",
+       "language": {
+           "code": "es_AR",
+           "policy": "deterministic"
+       },
+       "components": [
+           {
+               "type": "body",
+               "parameters": [
+                   {
+                       "type": "text",
+                       "text": cliente.nombre
+                   },
+                   {
+                       "type": "text",
+                       "text": str(cliente.entrega.strftime("%d-%m-%Y"))
+                   },
+                   {
+                       "type": "text",
+                       "text": cliente.modelo
+                   },
+               ]
+           },
+           {
+               "type": "button",
+               "sub_type": "quick_reply",
+               "index": 0,
+               "parameters": [
+                   {
+                       "type": "text",
+                       "text": "Ir a la encuesta"
+                   }
+               ]
+           }
+       ]
+   }
+}
+    )
+    print(data)
+    
+    token = Key.objects.get(name='wap')
+    resp = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+    return HttpResponse(f'{str(resp)} - {str(data)} ')
