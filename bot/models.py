@@ -12,16 +12,20 @@ class Error(models.Model):
     json = models.JSONField()
     
 class Cliente(models.Model):
-    telefono = models.IntegerField(unique=True)
+    telefono = models.IntegerField(unique=True, blank=True,null=True)
     nombre = models.CharField(max_length=50, blank=True,null=True)
-    email = models.CharField(max_length=50, blank=True,null=True)
+    preventa = models.CharField(max_length=30, blank=True,null=True)
+    patente = models.CharField(max_length=30, blank=True,null=True)
+    modelo = models.CharField(max_length=50, blank=True,null=True)
+    pregunta_1 = models.IntegerField(blank=True,null=True)
+    pregunta_2 = models.IntegerField(blank=True,null=True)
+    pregunta_3 = models.IntegerField(blank=True,null=True)
+    pregunta_4 = models.IntegerField(blank=True,null=True)
+    pregunta_5 = models.IntegerField(blank=True,null=True)
     flow = models.IntegerField(blank=True,null=True)
-    pregunta_1 = models.IntegerField()
-    pregunta_2 = models.IntegerField()
-    pregunta_3 = models.IntegerField()
-    pregunta_4 = models.IntegerField()
-    pregunta_5 = models.IntegerField()
     contacto = models.DateTimeField(auto_now=True)
+    iniciar = models.BooleanField(blank=True,null=True)
+    completo = models.BooleanField(blank=True,null=True)
     
     class Meta:
         verbose_name = 'cliente'

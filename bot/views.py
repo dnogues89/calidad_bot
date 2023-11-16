@@ -5,8 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 from . import services
 import re
 
-from calidad.models import Encuesta
-
 
 import json
 
@@ -31,23 +29,17 @@ class ChatFlow():
     def get_respuesta(self):
         hash_map = {
             0:True,
-            1:True,
-            2:self.validate_mail(self.mensaje),
-            22:self.validate_numero(self.mensaje,2),
-            3:self.validate_numero(self.mensaje,3),
-            4:self.validate_numero(self.mensaje,6),
-            30:True,
-            50:True,
+            1:self.validate_numero(self.mensaje,5),
+            2:self.validate_numero(self.mensaje,5),
+            3:self.validate_numero(self.mensaje,5),
+            4:self.validate_numero(self.mensaje,5),
+            5:self.validate_numero(self.mensaje,5),
+            6:True,
         }
         
         if hash_map[self.flow.flow_id]:
             self.update_cliente()
             self.answer = self.flow.respuesta_ok
-            self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)).replace('{self.cliente.email}',str(self.cliente.email))
-            try:
-                self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)).replace('{self.cliente.email}',str(self.cliente.email)).replace("{modelos[int(self.mensaje)]['modelo']}",modelos[int(self.mensaje)]['modelo']).replace("{modelos[int(self.mensaje)]['ficha']}",modelos[int(self.mensaje)]['ficha'])
-            except:
-                pass
             self.cliente.flow=self.flow.next_flow
             self.cliente.save()
         else:
@@ -56,20 +48,16 @@ class ChatFlow():
               
     def update_cliente(self):
         if self.flow.flow_id == 1:
-            self.cliente.nombre = self.mensaje
+            self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 2:
-            self.cliente.email = self.mensaje
-        if self.flow.flow_id == 22:
-            if str(self.mensaje) != '1':
-                self.cliente.flow = 0
-                self.flow = Flow.objects.get(flow_id=0)
+            self.cliente.pregunta_2 = self.mensaje
         if self.flow.flow_id == 3:
-            self.cliente.canal = self.mensaje
+            self.cliente.pregunta_3 = self.mensaje
         if self.flow.flow_id == 4:
-            self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
-        if self.flow.flow_id == 50:
-            if self.cliente.comentario == None:
-                self.cliente.comentario = self.mensaje
+            self.cliente.pregunta_4 = self.mensaje
+        if self.flow.flow_id == 5:
+            self.cliente.pregunta_5 = self.mensaje
+
 
 
     def validate_mail(self, correo):
@@ -104,54 +92,6 @@ def procesar_mensaje(body):
         return 'No procesado' + str(e)
 
 
-class ChatEncuesta():
-    def __init__(self,encuesta,mensaje) -> None:
-        self.cliente = encuesta.cliente
-        try:
-            self.id_wa_enviado = mensaje["entry"][0]['changes'][0]['value']['messages'][0]['context']['id']
-            self.mensaje = len(mensaje["entry"][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title'])
-        except:
-            pass
-        self.encuesta = encuesta
-        self.token = Key.objects.get(name='wap')
-        self.get_respuesta()
-        self.enviar_mensaje()
-    
-
-    
-    def get_respuesta(self):
-        hash_map = {
-            0:[self.encuesta.pregunta_1,""],
-            1:[self.encuesta.pregunta_2,self.encuesta.respuesta_1],
-            2:[self.encuesta.pregunta_3,self.encuesta.respuesta_2],
-            3:[self.encuesta.pregunta_4,self.encuesta.respuesta_3],
-            4:[self.encuesta.pregunta_5,self.encuesta.respuesta_4],
-            5:['Muchas gracias',self.encuesta.respuesta_5],
-        }
-        
-        self.answer = hash_map[self.encuesta.flow][0]
-        self.respuesta_1 = self.mensaje
-        self.encuesta.flow = int(self.encuesta.flow) + 1
-        self.encuesta.save()
-
-    def enviar_mensaje(self):
-        if self.encuesta.flow < 5:
-            list = []
-            body = self.answer
-            footer = "Calidad Espasa"
-            options = ["⭐​", "⭐​⭐​","⭐​⭐​⭐​","⭐​⭐​⭐​⭐​","⭐​⭐​⭐​⭐​⭐​"]
-
-            replyButtonData = services.listReply_Message(self.cliente.telefono, options, body, footer, "sed1",1)
-            list.append(replyButtonData)
-            for item in list:
-                envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)       
-                print(envio)
-        else:
-            data = services.text_Message(self.cliente.telefono,self.answer)
-            envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,data)        
-            print(envio)
-        
-    
 
 # Create your views here.
 @csrf_exempt
@@ -183,18 +123,18 @@ def webhook(request):
                     try:
                         cliente = Cliente.objects.get(telefono = telefonoCliente)
                     except:
-                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                    MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
+                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 50).save()
+                    MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()             
                     
                     try:
-                        encuesta = Encuesta.objects.get(cliente=cliente)
-
-                        if int(encuesta.flow) <=5:
-                            ChatEncuesta(encuesta,data)
-                    except:                
+                        iniciar = data["entry"][0]['changes'][0]['value']['messages'][0]['button']['text'] == 'Ir a la encuesta'
+                        if iniciar:
+                            respuesta = ChatFlow(cliente,mensaje).answer
+                    except:
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
-                        data = services.text_Message(telefonoCliente,respuesta)
-                        services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                    
+                    data = services.text_Message(telefonoCliente,respuesta)
+                    print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
                         
         try:  
             if 'messages' in data['entry'][0]['changes'][0]['value']:
@@ -215,7 +155,7 @@ def webhook(request):
                         MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
                         chat = ChatFlow(cliente,mensaje)
                         data = services.text_Message(chat.cliente.telefono,chat.answer)
-                        services.enviar_Mensaje_whatsapp(token.token,token.url,data)             
+                        print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
                         
         except json.JSONDecodeError:
             
