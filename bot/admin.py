@@ -10,7 +10,10 @@ class MensajesRecibidosAdmin(admin.ModelAdmin):
     list_display=('telefono_cliente','mensaje','creado','id_wa')
 
 class ClienteResource(resources.ModelResource):
-    fields = (
+    
+    class Meta:
+        model = Cliente
+        fields = (
         'nombre',
         'telefono',
         'preventa',
@@ -22,9 +25,6 @@ class ClienteResource(resources.ModelResource):
         'pregunta_4',
         'pregunta_5 ',
     )
-    
-    class Meta:
-        model = Cliente
 
 @admin.register(Cliente)
 class ClienteAdmin(ImportExportModelAdmin):
