@@ -116,7 +116,7 @@ def webhook(request):
                     try:
                         cliente = Cliente.objects.get(telefono = telefonoCliente)
                     except:
-                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 50).save()
+                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 50, preventa = 'asd123').save()
                     MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()             
                     
                     try:
