@@ -14,19 +14,7 @@ class ClienteResource(resources.ModelResource):
     class Meta:
         model = Cliente
         import_id_fields = ('preventa',)
-        fields = (
-        'nombre',
-        'telefono',
-        'preventa',
-        'patente',
-        'modelo',
-        'entrega',
-        'pregunta_1',
-        'pregunta_2',
-        'pregunta_3',
-        'pregunta_4',
-        'pregunta_5 ',
-    )
+
 
 @admin.register(Cliente)
 class ClienteAdmin(ImportExportModelAdmin):
