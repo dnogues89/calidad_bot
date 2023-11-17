@@ -24,7 +24,8 @@ class ChatFlow():
             2:self.validate_numero(self.mensaje,5),
             3:self.validate_numero(self.mensaje,5),
             4:self.validate_numero(self.mensaje,5),
-            5:True
+            5:True,
+            10:True,
         }
         
         if hash_map[self.flow.flow_id]:
