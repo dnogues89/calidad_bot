@@ -18,6 +18,7 @@ class ClienteResource(resources.ModelResource):
         'telefono',
         'preventa',
         'patente',
+        'modelo',
         'entrega',
         'pregunta_1',
         'pregunta_2',
