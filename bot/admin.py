@@ -13,6 +13,7 @@ class ClienteResource(resources.ModelResource):
     
     class Meta:
         model = Cliente
+        import_id_fields = ('preventa',)
         fields = (
         'nombre',
         'telefono',

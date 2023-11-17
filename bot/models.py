@@ -14,7 +14,7 @@ class Error(models.Model):
 class Cliente(models.Model):
     telefono = models.IntegerField(unique=True, blank=True,null=True)
     nombre = models.CharField(max_length=50, blank=True,null=True)
-    preventa = models.CharField(max_length=30, blank=True,null=True, primary_key=True)
+    preventa = models.CharField(max_length=30,primary_key=True)
     patente = models.CharField(max_length=30, blank=True,null=True)
     entrega = models.DateField(blank=True,null=True)
     modelo = models.CharField(max_length=50, blank=True,null=True)
