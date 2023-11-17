@@ -28,6 +28,7 @@ class ClienteResource(resources.ModelResource):
 
 @admin.register(Cliente)
 class ClienteAdmin(ImportExportModelAdmin):
+    resource_class = ClienteResource
     list_display=('nombre','telefono','flow','contacto')
 
 @admin.register(Flow)
