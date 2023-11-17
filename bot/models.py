@@ -25,8 +25,8 @@ class Cliente(models.Model):
     pregunta_5 = models.IntegerField(blank=True,null=True)
     flow = models.IntegerField(blank=True,null=True)
     contacto = models.DateTimeField(blank=True,null=True)
-    iniciar = models.BooleanField()
-    completo = models.BooleanField()
+    iniciar = models.BooleanField(null=True)
+    completo = models.BooleanField(null=True)
     
     class Meta:
         verbose_name = 'cliente'
