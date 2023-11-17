@@ -120,6 +120,8 @@ def webhook(request):
                     try:
                         iniciar = data["entry"][0]['changes'][0]['value']['messages'][0]['button']['text'] == 'Ir a la encuesta'
                         if iniciar:
+                            cliente.flow = 0
+                            cliente.save()
                             respuesta = ChatFlow(cliente,mensaje).answer
                     except:
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
