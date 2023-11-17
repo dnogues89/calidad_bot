@@ -48,6 +48,7 @@ class ChatFlow():
             self.cliente.pregunta_4 = self.mensaje
         if self.flow.flow_id == 5:
             self.cliente.pregunta_5 = self.mensaje
+            self.cliente.completo = True
 
 
 
@@ -122,6 +123,7 @@ def webhook(request):
                         iniciar = data["entry"][0]['changes'][0]['value']['messages'][0]['button']['text'] == 'Ir a la encuesta'
                         if iniciar:
                             cliente.flow = 0
+                            cliente.iniciar = True
                             cliente.save()
                             respuesta = ChatFlow(cliente,mensaje).answer
                     except:
@@ -182,53 +184,63 @@ def clientes_abandonados(request):
         
         
 def realizar_encuesta(request): 
-    cliente = Cliente.objects.get(pk=1)
-    data = json.dumps(
-            {
-   "messaging_product": "whatsapp",
-   "to": cliente.telefono,
-   "type": "template",
-   "template": {
-       "name": "encuesta_calidad",
-       "language": {
-           "code": "es_AR",
-           "policy": "deterministic"
-       },
-       "components": [
-           {
-               "type": "body",
-               "parameters": [
-                   {
-                       "type": "text",
-                       "text": cliente.nombre
-                   },
-                   {
-                       "type": "text",
-                       "text": str(cliente.entrega.strftime("%d-%m-%Y"))
-                   },
-                   {
-                       "type": "text",
-                       "text": cliente.modelo
-                   },
-               ]
-           },
-           {
-               "type": "button",
-               "sub_type": "quick_reply",
-               "index": 0,
-               "parameters": [
-                   {
-                       "type": "text",
-                       "text": "Ir a la encuesta"
-                   }
-               ]
-           }
-       ]
-   }
-}
-    )
-    print(data)
-    
+    ok =[]
+    error = []
     token = Key.objects.get(name='wap')
-    resp = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
-    return HttpResponse(f'{str(resp)} - {str(data)} ')
+    import datetime
+    clientes = Cliente.objects.filter(iniciar=False)
+    for cliente in clientes:
+        cliente.contacto = datetime.datetime.now()
+        data = json.dumps(
+                {
+    "messaging_product": "whatsapp",
+    "to": cliente.telefono,
+    "type": "template",
+    "template": {
+        "name": "encuesta_calidad",
+        "language": {
+            "code": "es_AR",
+            "policy": "deterministic"
+        },
+        "components": [
+            {
+                "type": "body",
+                "parameters": [
+                    {
+                        "type": "text",
+                        "text": cliente.nombre
+                    },
+                    {
+                        "type": "text",
+                        "text": str(cliente.entrega.strftime("%d-%m-%Y"))
+                    },
+                    {
+                        "type": "text",
+                        "text": cliente.modelo
+                    },
+                ]
+            },
+            {
+                "type": "button",
+                "sub_type": "quick_reply",
+                "index": 0,
+                "parameters": [
+                    {
+                        "type": "text",
+                        "text": "Ir a la encuesta"
+                    }
+                ]
+            }
+        ]
+    }
+    }
+        )
+        
+        resp = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+        if resp[0] == 'mensaje enviado':
+            cliente.save()
+            ok.append(cliente.nombre)
+        else:
+            error.append(cliente.nombre)
+
+    return HttpResponse(f'OK:{ok}\nERROR:{error} ')

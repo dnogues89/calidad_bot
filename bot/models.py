@@ -24,7 +24,7 @@ class Cliente(models.Model):
     pregunta_4 = models.IntegerField(blank=True,null=True)
     pregunta_5 = models.IntegerField(blank=True,null=True)
     flow = models.IntegerField(blank=True,null=True)
-    contacto = models.DateTimeField(auto_now=True)
+    contacto = models.DateTimeField()
     iniciar = models.BooleanField()
     completo = models.BooleanField()
     
