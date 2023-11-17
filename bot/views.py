@@ -8,15 +8,6 @@ import re
 
 import json
 
-modelos = {
-1:{'modelo':'Amarok','ficha':'\n*Motor 2.0l:* https://bit.ly/3npJSfV\n*Motor V6:* https://bit.ly/3Vr63ix'},
-2:{'modelo':'Taos','ficha':'http://bit.ly/3X4d49L'},
-3:{'modelo':'T-Cross','ficha':'https://bit.ly/3p9gf2U'},
-4:{'modelo':'Nivus','ficha':'https://bit.ly/422l5h1'},
-5:{'modelo':'Polo','ficha':'https://bit.ly/3P7xjBv'},
-6:{'modelo':'Tiguan','ficha':'https://bit.ly/3p0mZQB'},
-}
-
 class ChatFlow():
     def __init__(self, cliente, mensaje) -> None:
         self.cliente = cliente
@@ -46,15 +37,15 @@ class ChatFlow():
 
               
     def update_cliente(self):
-        if self.flow.flow_id == 0:
-            self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 1:
-            self.cliente.pregunta_2 = self.mensaje
+            self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 2:
-            self.cliente.pregunta_3 = self.mensaje
+            self.cliente.pregunta_2 = self.mensaje
         if self.flow.flow_id == 3:
-            self.cliente.pregunta_4 = self.mensaje
+            self.cliente.pregunta_3 = self.mensaje
         if self.flow.flow_id == 4:
+            self.cliente.pregunta_4 = self.mensaje
+        if self.flow.flow_id == 5:
             self.cliente.pregunta_5 = self.mensaje
 
 
@@ -195,7 +186,7 @@ def realizar_encuesta(request):
    "to": cliente.telefono,
    "type": "template",
    "template": {
-       "name": "encuesta_calidad_baires",
+       "name": "encuesta_calidad",
        "language": {
            "code": "es_AR",
            "policy": "deterministic"
