@@ -116,7 +116,7 @@ def webhook(request):
                     try:
                         cliente = Cliente.objects.get(telefono = telefonoCliente)
                     except:
-                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 50, preventa = 'asd123').save()
+                        cliente=Cliente.objects.create(telefono = telefonoCliente, preventa = 'asddd123').save()
                     MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()             
                     
                     try:
@@ -148,7 +148,7 @@ def webhook(request):
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
                         
-                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()
                         chat = ChatFlow(cliente,mensaje)
                         data = services.text_Message(chat.cliente.telefono,chat.answer)
                         print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
