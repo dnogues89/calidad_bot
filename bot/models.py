@@ -12,7 +12,7 @@ class Error(models.Model):
     json = models.JSONField()
     
 class Cliente(models.Model):
-    telefono = models.IntegerField(unique=True, blank=True,null=True)
+    telefono = models.CharField(max_length=50,unique=True, blank=True,null=True)
     nombre = models.CharField(max_length=50, blank=True,null=True)
     preventa = models.CharField(max_length=30,primary_key=True)
     patente = models.CharField(max_length=30, blank=True,null=True)
