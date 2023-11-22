@@ -123,13 +123,12 @@ def webhook(request):
                             cliente.iniciar = True
                             cliente.save()
                             respuesta = ChatFlow(cliente,mensaje)
-                            print(respuesta, respuesta.answer)
                             respuesta = respuesta.answer
                     except:
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
                         
                     data = services.text_Message(telefonoCliente,respuesta)
-                    print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
+                    services.enviar_Mensaje_whatsapp(token.token,token.url,data)
                         
         try:  
             if 'messages' in data['entry'][0]['changes'][0]['value']:
@@ -150,7 +149,7 @@ def webhook(request):
                         MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()
                         chat = ChatFlow(cliente,mensaje)
                         data = services.text_Message(chat.cliente.telefono,chat.answer)
-                        print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
+                        services.enviar_Mensaje_whatsapp(token.token,token.url,data)
                         
         except json.JSONDecodeError:
             
