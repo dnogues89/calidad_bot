@@ -123,6 +123,7 @@ def webhook(request):
                             cliente.iniciar = True
                             cliente.save()
                             respuesta = ChatFlow(cliente,mensaje)
+                            print(respuesta, respuesta.answer)
                             respuesta = respuesta.answer
                     except:
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
