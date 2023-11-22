@@ -25,7 +25,7 @@ class Cliente(models.Model):
     pregunta_5 = models.IntegerField(blank=True,null=True)
     comentario = models.TextField(blank=True,null=True)
     flow = models.IntegerField(blank=True,null=True)
-    contacto = models.DateTimeField(blank=True,null=True)
+    contacto = models.DateTimeField(blank=True,null=True, verbose_name='Envio encuesta')
     iniciar = models.BooleanField(blank=True,default=False)
     completo = models.BooleanField(blank=True,default=False)
     
