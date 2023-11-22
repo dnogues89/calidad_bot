@@ -39,6 +39,7 @@ class ChatFlow():
             self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 2:
             self.cliente.comentario = self.mensaje
+            self.cliente.completo = True
 
 
 
