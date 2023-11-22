@@ -12,6 +12,7 @@ class ChatFlow():
     def __init__(self, cliente, mensaje) -> None:
         self.cliente = cliente
         self.mensaje = mensaje
+        print('antes del flow')
         self.flow = Flow.objects.get(flow_id=self.cliente.flow)
         print(self.flow)
         self.get_respuesta()
