@@ -150,6 +150,7 @@ def webhook(request):
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
                         
                         MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()
+                        print(mensaje)
                         chat = ChatFlow(cliente,mensaje)
                         data = services.text_Message(chat.cliente.telefono,chat.answer)
                         services.enviar_Mensaje_whatsapp(token.token,token.url,data)
