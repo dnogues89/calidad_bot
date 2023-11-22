@@ -12,14 +12,8 @@ class ChatFlow():
     def __init__(self, cliente, mensaje) -> None:
         self.cliente = cliente
         self.mensaje = mensaje
-        print('antes del flow')
         self.flow = Flow.objects.get(flow_id=self.cliente.flow)
-        print(self.flow)
-        print(self.flow.flow_id)
-        print(self.flow.respuesta_ok)
-        print(self.flow.next_flow)
         self.get_respuesta()
-        print(self.answer)
         
 
     
@@ -30,7 +24,8 @@ class ChatFlow():
             2:self.length_check(200),
             10:True,
         }
-        
+        print('hash!!!!!!!')
+        print(hash_map[self.flow.flow_id])
         if hash_map[self.flow.flow_id]:
             print('pase el hashmap')
             self.update_cliente()
