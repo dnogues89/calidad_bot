@@ -21,11 +21,8 @@ class ChatFlow():
         hash_map = {
             0:True,
             1:self.validate_numero(self.mensaje,5),
-            2:self.validate_numero(self.mensaje,5),
-            3:self.validate_numero(self.mensaje,5),
-            4:self.validate_numero(self.mensaje,5),
-            5:True,
-            10:True,
+            2:self.length_check(200),
+            10:True
         }
         
         if hash_map[self.flow.flow_id]:
@@ -41,14 +38,7 @@ class ChatFlow():
         if self.flow.flow_id == 1:
             self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 2:
-            self.cliente.pregunta_2 = self.mensaje
-        if self.flow.flow_id == 3:
-            self.cliente.pregunta_3 = self.mensaje
-        if self.flow.flow_id == 4:
-            self.cliente.pregunta_4 = self.mensaje
-        if self.flow.flow_id == 5:
-            self.cliente.pregunta_5 = self.mensaje
-            self.cliente.completo = True
+            self.cliente.comentario = self.mensaje
 
 
 
@@ -66,6 +56,12 @@ class ChatFlow():
                 return True
         except:
             return False
+    
+    def length_check(self,param):
+        if len(self.msg) > param:
+            return False
+        else:
+            return True
     
 def procesar_mensaje(body):
     try:
