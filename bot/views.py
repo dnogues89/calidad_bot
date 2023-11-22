@@ -15,6 +15,9 @@ class ChatFlow():
         print('antes del flow')
         self.flow = Flow.objects.get(flow_id=self.cliente.flow)
         print(self.flow)
+        print(self.flow.flow_id)
+        print(self.flow.respuesta_ok)
+        print(self.flow.next_flow)
         self.get_respuesta()
         print(self.answer)
         
