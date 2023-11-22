@@ -22,7 +22,7 @@ class ChatFlow():
             0:True,
             1:self.validate_numero(self.mensaje,5),
             2:self.length_check(200),
-            10:True
+            10:True,
         }
         
         if hash_map[self.flow.flow_id]:
