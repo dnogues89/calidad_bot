@@ -19,7 +19,7 @@ class ClienteResource(resources.ModelResource):
 @admin.register(Cliente)
 class ClienteAdmin(ImportExportModelAdmin):
     list_display=('nombre','telefono','entrega','pregunta_1','comentario','contacto','iniciar','completo')
-    list_filter = ['completo',]
+    list_filter = ['completo','iniciar']
     date_hierarchy = 'entrega'
     resource_class = ClienteResource
     
