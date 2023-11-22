@@ -125,7 +125,8 @@ def webhook(request):
                             respuesta = ChatFlow(cliente,mensaje).answer
                     except:
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
-                    
+                        
+                    respuesta = ChatFlow(cliente,mensaje).answer
                     data = services.text_Message(telefonoCliente,respuesta)
                     print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
                         
