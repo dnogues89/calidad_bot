@@ -122,11 +122,11 @@ def webhook(request):
                             cliente.flow = 0
                             cliente.iniciar = True
                             cliente.save()
-                            respuesta = ChatFlow(cliente,mensaje).answer
+                            respuesta = ChatFlow(cliente,mensaje)
+                            respuesta = respuesta.answer
                     except:
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
                         
-                    respuesta = ChatFlow(cliente,mensaje).answer
                     data = services.text_Message(telefonoCliente,respuesta)
                     print(services.enviar_Mensaje_whatsapp(token.token,token.url,data))
                         
