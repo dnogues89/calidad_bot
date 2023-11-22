@@ -13,7 +13,9 @@ class ChatFlow():
         self.cliente = cliente
         self.mensaje = mensaje
         self.flow = Flow.objects.get(flow_id=self.cliente.flow)
+        print(self.flow)
         self.get_respuesta()
+        print(self.answer)
         
 
     
