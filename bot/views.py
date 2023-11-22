@@ -19,6 +19,7 @@ class ChatFlow():
 
     
     def get_respuesta(self):
+        print('hash!!!!!!!  1 1 1 1 1 1 1')
         hash_map = {
             0:True,
             1:self.validate_numero(self.mensaje,5),
