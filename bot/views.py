@@ -13,6 +13,7 @@ class ChatFlow():
         self.cliente = cliente
         self.mensaje = mensaje
         self.flow = Flow.objects.get(flow_id=self.cliente.flow)
+        print("antes del hash!!!!")
         self.get_respuesta()
         
 
@@ -22,7 +23,7 @@ class ChatFlow():
             0:True,
             1:self.validate_numero(self.mensaje,5),
             2:self.length_check(200),
-            10:True,
+            10:True
         }
         print('hash!!!!!!!')
         print(hash_map[self.flow.flow_id])
