@@ -26,7 +26,7 @@ class ChatFlow():
             2:self.length_check(200),
             10:True,
         }
-        print('hash!!!!!!!')
+        print('hash!!!!!!! 22222')
         print(hash_map[self.flow.flow_id])
         if hash_map[self.flow.flow_id]:
             print('pase el hashmap')
