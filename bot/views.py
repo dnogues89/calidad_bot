@@ -32,9 +32,11 @@ class ChatFlow():
         }
         
         if hash_map[self.flow.flow_id]:
+            print('pase el hashmap')
             self.update_cliente()
             self.answer = self.flow.respuesta_ok
             self.cliente.flow=self.flow.next_flow
+            print('antes de guardar el clientes')
             self.cliente.save()
         else:
             self.answer = Flow.objects.filter(next_flow=self.flow.flow_id)[0].respuesta_nook
@@ -42,6 +44,7 @@ class ChatFlow():
               
     def update_cliente(self):
         if self.flow.flow_id == 1:
+            print('estoy en el flow ok!')
             self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 2:
             self.cliente.comentario = self.mensaje
