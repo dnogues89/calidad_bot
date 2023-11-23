@@ -28,6 +28,7 @@ class Cliente(models.Model):
     contacto = models.DateTimeField(blank=True,null=True, verbose_name='Envio encuesta')
     iniciar = models.BooleanField(blank=True,default=False)
     completo = models.BooleanField(blank=True,default=False)
+    cant_envios = models.IntegerField(blank=True,null=True,default=0,verbose_name='Envios')
     
     class Meta:
         verbose_name = 'cliente'
