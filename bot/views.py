@@ -4,6 +4,7 @@ from .models import MensajesRecibidos, Error,Key, Cliente, Flow
 from django.views.decorators.csrf import csrf_exempt
 from . import services
 import re
+import datetime
 
 
 import json
@@ -40,12 +41,15 @@ class ChatFlow():
 
               
     def update_cliente(self):
+        if self.flow.flow_id == 0:
+            self.cliente.iniciar=True
         if self.flow.flow_id == 1:
             print('estoy en el flow ok!')
             self.cliente.pregunta_1 = self.mensaje
         if self.flow.flow_id == 2:
             self.cliente.comentario = self.mensaje
             self.cliente.completo = True
+            self.cliente.fecha_finalizacion = datetime.datetime.now()
 
 
 
@@ -192,8 +196,8 @@ def realizar_encuesta(request):
     ok =[]
     error = []
     token = Key.objects.get(name='wap')
-    import datetime
-    clientes = Cliente.objects.filter(iniciar=False)
+    
+    clientes = Cliente.objects.filter(completo=False)
     clientes = clientes.filter(cant_envios__lte=3)
     for cliente in clientes:
         cliente.cant_envios = int(cliente.cant_envios + 1)

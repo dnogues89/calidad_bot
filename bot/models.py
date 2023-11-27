@@ -29,10 +29,16 @@ class Cliente(models.Model):
     iniciar = models.BooleanField(blank=True,default=False)
     completo = models.BooleanField(blank=True,default=False)
     cant_envios = models.IntegerField(blank=True,null=True,default=0,verbose_name='Envios')
+    fecha_finalizacion = models.DateField(blank=True,null=True, verbose_name='F.Completo')
     
+    def __str__(self):
+        return self.preventa
+        
     class Meta:
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
+    
+    
     
 class Flow(models.Model):
     flow_id = models.IntegerField()
