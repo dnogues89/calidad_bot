@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bot',
     'calidad',
     'import_export',
+    'encuesta',
 ]
 
 MIDDLEWARE = [
