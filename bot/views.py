@@ -198,7 +198,7 @@ def realizar_encuesta(request):
     token = Key.objects.get(name='wap')
     
     clientes = Cliente.objects.filter(completo=False)
-    clientes = clientes.filter(cant_envios__lte=3)
+    clientes = clientes.filter(cant_envios__lte=2)
     for cliente in clientes:
         cliente.cant_envios = int(cliente.cant_envios + 1)
         cliente.contacto = datetime.datetime.now()
