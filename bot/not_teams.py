@@ -43,4 +43,6 @@ class Notificaciones:
         
     def send_card(self):
         response = requests.post(self.webhook,json=self.card())
+        print(response)
+        print(response.text)
 
