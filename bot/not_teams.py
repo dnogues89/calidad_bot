@@ -12,10 +12,10 @@ class Notificaciones:
     def set_data(self):
         self.data = {
                         "title": "Encuesta completada - {} ".format(self.cliente.fecha_finalizacion),
-                        "text": "{}".format(self.cliente.preventa),
+                        "text": "{}",
                         "sections": [
                                 {
-                                    "activityTitle": "Tipos de cambio",
+                                    "activityTitle": "{}".format(self.cliente.preventa),
                                     "facts": [
                                         {
                                             "name": "Nota",

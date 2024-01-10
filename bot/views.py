@@ -6,6 +6,8 @@ from . import services
 import re
 import datetime
 
+from .not_teams import Notificaciones
+
 
 import json
 
@@ -50,6 +52,7 @@ class ChatFlow():
             self.cliente.comentario = self.mensaje
             self.cliente.completo = True
             self.cliente.fecha_finalizacion = datetime.datetime.now()
+            Notificaciones(self.cliente).send_card()
 
 
 
