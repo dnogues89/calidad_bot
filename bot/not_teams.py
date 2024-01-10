@@ -11,8 +11,8 @@ class Notificaciones:
 
     def set_data(self):
         self.data = {
-                        "title": "{} ".format(self.cliente.preventa),
-                        "text": "Nota: {}\nComentario:{}".format(self.cliente.pregunta_1,self.cliente.comentario),
+                        "title": "{} - {}".format(self.cliente.preventa,self.cliente.pregunta_1),
+                        "text": "Comentario:{}".format(self.cliente.comentario),
                         "sections": [
                                 {
                                     "activityTitle": "{}".format(self.cliente.fecha_finalizacion.strftime('%d-%m-%Y')),
