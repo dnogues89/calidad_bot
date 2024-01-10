@@ -12,7 +12,7 @@ class Notificaciones:
     def set_data(self):
         self.data = {
                         "title": "{} ".format(self.cliente.preventa),
-                        "text": "{}",
+                        "text": "Nota: {}\nComentario:{}".format(self.cliente.pregunta_1,self.cliente.comentario),
                         "sections": [
                                 {
                                     "activityTitle": "{}".format(self.cliente.fecha_finalizacion.strftime('%d-%m-%Y')),
@@ -38,7 +38,7 @@ class Notificaciones:
         "themeColor": "0078D7",
         "title": self.data['title'],
         "text": self.data['text'],
-        "sections": self.data['sections']
+        # "sections": self.data['sections']
     }
         
     def send_card(self):
