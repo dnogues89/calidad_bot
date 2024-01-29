@@ -255,6 +255,7 @@ def realizar_encuesta(request):
             cliente.save()
             ok.append(cliente.nombre)
         else:
+            print(resp)
             error.append(cliente.nombre)
 
     return HttpResponse(f'OK:{ok}\nERROR:{error} ')
