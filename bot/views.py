@@ -125,9 +125,11 @@ def webhook(request):
                 except:
                     try:
                         cliente = Cliente.objects.get(telefono = telefonoCliente)
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()     
                     except:
-                        cliente=Cliente.objects.create(telefono = telefonoCliente, preventa = 'asddd123').save()
-                    MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()             
+                        # cliente=Cliente.objects.create(telefono = telefonoCliente, preventa = 'asddd123').save()
+                        pass
+                            
                     
                     try:
                         iniciar = data["entry"][0]['changes'][0]['value']['messages'][0]['button']['text'] == 'Ir a la encuesta'
@@ -156,10 +158,12 @@ def webhook(request):
                     except:
                         try:
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
+                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()
                         except:
-                            cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
+                            # cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
+                            pass
                         
-                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_calidad',json=data).save()
+                        
                         print(mensaje)
                         chat = ChatFlow(cliente,mensaje)
                         data = services.text_Message(chat.cliente.telefono,chat.answer)
@@ -255,7 +259,6 @@ def realizar_encuesta(request):
             cliente.save()
             ok.append(cliente.nombre)
         else:
-            print(resp)
             error.append(cliente.nombre)
 
     return HttpResponse(f'OK:{ok}\nERROR:{error} ')
