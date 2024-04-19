@@ -73,7 +73,7 @@ class ClienteAdmin(ImportExportModelAdmin):
                         {
                             "type": "text",
                             "text": obj.entrega
-                        },
+                        }
                     ]
                 }
             ]
