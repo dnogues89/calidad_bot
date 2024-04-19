@@ -87,7 +87,7 @@ class ClienteAdmin(ImportExportModelAdmin):
             if resp_ok(resp,'Enviando plantilla'):
                 envios_ok += 1
                 obj.contacto = timezone.now()
-                obj.cant_envios += 1
+                obj.cant_envios == 3
                 obj.save()
                 Error.objects.create(error=str(obj.contacto),json=resp.json()).save()
             else:
