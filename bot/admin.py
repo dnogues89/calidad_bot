@@ -7,6 +7,7 @@ from django.utils import timezone
 import json
 from . import services
 
+
 def resp_ok(resp,name):
     if resp.status_code == 200:
         return True
@@ -43,6 +44,8 @@ class ClienteAdmin(ImportExportModelAdmin):
         envios_ok = 0
         envios_no_ok = 0
         for obj in objetos:
+            date = str(obj.entrega.strftime('%d/%m/%y'))
+            print(date)
             data = json.dumps(
                     {
         "messaging_product": "whatsapp",
@@ -72,7 +75,7 @@ class ClienteAdmin(ImportExportModelAdmin):
                         },
                         {
                             "type": "text",
-                            "text": str(obj.entrega.strftime('%d/%m/%y'))
+                            "text": date
                         }
                     ]
                 }
