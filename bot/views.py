@@ -27,16 +27,15 @@ class ChatFlow():
             1:self.validate_numero(self.mensaje,5),
             2:self.length_check(200),
             10:True,
+            100:self.validate_numero(self.mensaje,10),
+            101:True
         }
             
-        print('hash!!!!!!! 22222')
         print(hash_map[self.flow.flow_id])
         if hash_map[self.flow.flow_id]:
-            print('pase el hashmap')
             self.update_cliente()
             self.answer = self.flow.respuesta_ok
             self.cliente.flow=self.flow.next_flow
-            print('antes de guardar el clientes')
             self.cliente.save()
         else:
             self.answer = Flow.objects.filter(next_flow=self.flow.flow_id)[0].respuesta_nook
@@ -53,6 +52,11 @@ class ChatFlow():
             self.cliente.completo = True
             self.cliente.fecha_finalizacion = datetime.datetime.now()
             Notificaciones(self.cliente).send_card()
+            
+        if self.flow == 100:
+            if self.mensaje != '10':
+                self.flow = Flow.objects.get(flow_id=101)
+                
 
 
 
