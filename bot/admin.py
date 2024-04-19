@@ -34,6 +34,7 @@ class ClienteAdmin(ImportExportModelAdmin):
     list_filter = ['completo','iniciar']
     date_hierarchy = 'fecha_finalizacion'
     resource_class = ClienteResource
+    actions = ('envio_campana',)
 
     @admin.action(description='Enviar csi')
     def envio_campana(self,request,objetos):
