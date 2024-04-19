@@ -89,7 +89,7 @@ class ClienteAdmin(ImportExportModelAdmin):
                 obj.contacto = timezone.now()
                 obj.cant_envios += 1
                 obj.save()
-                Error.objects.create(error=str(obj.f_envio),json=resp.json()).save()
+                Error.objects.create(error=str(obj.contacto),json=resp.json()).save()
             else:
                 envios_no_ok += 1
 
