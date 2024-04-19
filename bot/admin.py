@@ -45,7 +45,6 @@ class ClienteAdmin(ImportExportModelAdmin):
         envios_no_ok = 0
         for obj in objetos:
             date = str(obj.entrega.strftime('%d/%m/%y'))
-            print(date)
             data = json.dumps(
                     {
         "messaging_product": "whatsapp",
@@ -54,7 +53,7 @@ class ClienteAdmin(ImportExportModelAdmin):
         "template": {
             "name": "encuesta_csi",
             "language": {
-                "code": "es",
+                "code": "es_AR",
                 "policy": "deterministic"
             },
             "components": [
