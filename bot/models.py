@@ -22,7 +22,7 @@ class Cliente(models.Model):
     pregunta_2 = models.IntegerField(blank=True,null=True)
     pregunta_3 = models.IntegerField(blank=True,null=True)
     pregunta_4 = models.IntegerField(blank=True,null=True)
-    pregunta_5 = models.IntegerField(blank=True,null=True,verbose_name='Plantilla')
+    pregunta_5 = models.CharField(max_length=100,blank=True,null=True,verbose_name='Plantilla')
     comentario = models.TextField(blank=True,null=True)
     flow = models.IntegerField(blank=True,null=True)
     contacto = models.DateTimeField(blank=True,null=True, verbose_name='Envio encuesta')
