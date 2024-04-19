@@ -56,10 +56,12 @@ class ChatFlow():
         if self.flow.flow_id == 100:
             self.cliente.iniciar=True
             self.cliente.pregunta_1 = self.mensaje
+            self.cliente.fecha_finalizacion = datetime.datetime.now()
             Notificaciones(self.cliente).send_card()
             if self.mensaje != '10' and self.mensaje != '9':
                 self.cliente.iniciar=True
-                self.flow = Flow.objects.get(flow_id=101)
+                self.cliente.fecha_finalizacion = datetime.datetime.now()
+                self.flow = Flow.objects.get(flow_id=102)
                 Notificaciones(self.cliente).send_card()
                 
 
