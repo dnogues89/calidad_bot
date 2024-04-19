@@ -72,7 +72,7 @@ class ClienteAdmin(ImportExportModelAdmin):
                         },
                         {
                             "type": "text",
-                            "text": obj.entrega.strftime('%d/%m/%y')
+                            "text": str(obj.entrega.strftime('%d/%m/%y'))
                         }
                     ]
                 }
