@@ -49,7 +49,7 @@ class ClienteAdmin(ImportExportModelAdmin):
         "to": obj.telefono,
         "type": "template",
         "template": {
-            "name": 'encuesta_csi',
+            "name": "encuesta_csi",
             "language": {
                 "code": "es",
                 "policy": "deterministic"
