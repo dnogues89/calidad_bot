@@ -267,7 +267,7 @@ def realizar_encuesta(request):
         )
         
         resp = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
-        if resp[0] == 'mensaje enviado':
+        if resp.status_code == 200 or resp.status_code == 201:
             cliente.save()
             ok.append(cliente.nombre)
         else:
